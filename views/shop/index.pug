@@ -1,0 +1,22 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if prods.length > 0
+      .container.mt-4
+        .row
+          each product in prods
+            .col.d-flex.justify-content-center 
+              .card.text-center
+                .card-header #{product.title}            
+                .card-body
+                  img(src="/" + product.imageUrl, alt="#{product.title}")
+                  h6 $ #{product.price}
+                  p.card-text #{product.description}
+                  a.btn.btn-primary(href="/products/" + product._id) Details
+
+                  if isAuthenticated
+                    include ../includes/add-to-cart
+        include ../includes/pagination
+    else
+      h1 No Products Found!

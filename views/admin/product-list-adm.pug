@@ -1,0 +1,24 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if prods.length > 0
+      .container.mt-4
+        .row
+          each product in prods
+            .col.d-flex.justify-content-center 
+              .card.text-center
+                .card-header #{product.title}            
+                .card-body
+                  img(src="/" + product.imageUrl, alt="#{product.title}")
+                  h6 #{product.price}
+                  p.card-text #{product.description}
+                  a.btn.btn-primary(href="/admin/edit-product/" + product._id + "?edit=true") Edit
+
+                  input(type="hidden", name="productId", value=product._id)
+                  input(type="hidden", name="_csrf", value=csrfToken)
+                  <button class="btn btn-danger" onclick="deleteProduct(this)">Delete</button>
+    else
+      h1 No Products Found!
+
+  script(src="/scripts/admin.js")  

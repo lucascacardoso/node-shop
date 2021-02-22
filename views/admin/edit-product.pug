@@ -1,0 +1,46 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if errorMessage
+      div.alert.alert-danger(role="alert")= errorMessage
+    .container.mt-4
+      .card
+        form.card-body(action=(editing ? "/admin/edit-product" : "/admin/add-product"), method="POST", novalidate, enctype="multipart/form-data")
+          .form-group
+            label(for="title") Title
+            input.form-control(
+              type="text",
+              name="title",
+              value=(editing || hasErrors ? product.title : ''),
+              class=(validationErrors.find(e => e.param === 'title') ? 'is-invalid' : '')
+            )#title
+            label(for="image") Image
+            input.form-control(
+              type="file",
+              name="image"
+            )#image
+            label(for="description") Description
+            textarea.form-control(
+              name="description",
+              cols="30",
+              rows="5",
+              class=(validationErrors.find(e => e.param === 'description') ? 'is-invalid' : '')
+            )#description= editing || hasErrors ? product.description : ''
+            label(for="price") Price
+            input.form-control(
+              type="text",
+              name="price",
+              value=(editing || hasErrors ? product.price : ''),
+              class=(validationErrors.find(e => e.param === 'price') ? 'is-invalid' : '')
+            )#price            
+            
+            if editing
+              input(type="hidden", name="productId", value=product._id)
+
+          input(type="hidden", name="_csrf", value=csrfToken)
+
+          if editing
+            button.btn.btn-secondary(type="submit") Update Product
+          else  
+            button.btn.btn-secondary(type="submit") Add Product

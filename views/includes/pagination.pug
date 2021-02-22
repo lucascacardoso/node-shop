@@ -1,0 +1,16 @@
+nav.d-flex.justify-content-center
+  ul.pagination    
+    if currentPage !== 1 && previousPage !== 1
+      li.page-item       
+        a.page-link(href="?page=1") 1
+    if hasPreviousPage    
+      li.page-item 
+        a.page-link(href="?page=" + previousPage)= previousPage  
+    li.page-item 
+        a.page-link.active(href="?page=" + currentPage)= currentPage
+    if hasNextPage 
+      li.page-item 
+        a.page-link(href="?page=" + nextPage)= nextPage
+    if currentPage !== lastPage && nextPage !== lastPage 
+      li.page-item 
+        a.page-link(href="?page=" + lastPage)= lastPage              

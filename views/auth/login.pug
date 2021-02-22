@@ -1,0 +1,31 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if errorMessage
+      div.alert.alert-danger(role="alert")= errorMessage
+    .container.mt-4
+      .card
+        form.card-body(action="/login", method="POST", novalidate)
+          .form-group
+            label(for="email") Email
+            input.form-control(
+              type="email",
+              name="email",
+              value=oldInputs.email,
+              class=(validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '')
+            )#email
+            label(for="password") Password
+            input.form-control(
+              type="password",
+              name="password",
+              value=oldInputs.password,
+              class=(validationErrors.find(e => e.param === 'password') ? 'is-invalid' : '')
+            )#password        
+
+          input(type="hidden", name="_csrf", value=csrfToken)
+          button.btn.btn-primary(type="submit") Login
+
+    .d-flex.justify-content-center
+      a(href="/reset") Reset Password   
+

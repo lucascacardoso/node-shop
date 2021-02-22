@@ -1,0 +1,15 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if errorMessage
+      div.alert.alert-danger(role="alert")= errorMessage
+    .container.mt-4
+      .card
+        form.card-body(action="/reset", method="POST")
+          .form-group
+            label(for="email") Email
+            input.form-control(type="email", name="email")#email                    
+
+          input(type="hidden", name="_csrf", value=csrfToken)
+          button.btn.btn-primary(type="submit") Reset Password

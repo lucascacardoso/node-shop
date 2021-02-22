@@ -1,0 +1,21 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if products.length > 0
+      .container.mt-4
+        each product in products
+          .shadow-sm.p-3.mb-5.bg-white.rounded
+            .row.align-items-center
+              .col 
+                h2 #{product.prodId.title}
+              .col   
+                h2 Quantity: #{product.quantity}
+              .col  
+                form(action="/cart-delete-item", method="POST")
+                  input(type="hidden", name="productId", value=product.prodId._id)
+                  button.btn.btn-danger.btn-sm Delete
+      .d-flex.justify-content-center
+        a.btn.btn-primary(href="/checkout") Order Now!
+    else
+      h1 No Products in Cart!

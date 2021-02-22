@@ -1,0 +1,12 @@
+extends ../layouts/main-layout.pug
+
+block content
+    main.text-center
+        h1 #{product.title}
+        hr
+        img(src="/" + product.imageUrl, alt="#{product.title}")
+        h2 #{product.price}
+        p.card-text #{product.description}
+
+        if isAuthenticated
+            include ../includes/add-to-cart

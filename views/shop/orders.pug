@@ -1,0 +1,18 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if orders.length > 0
+      .container.mt-4
+        each order in orders
+          .align-items-center
+            h1 # #{order._id} - <a href="/orders/#{order._id}">Invoice</a>
+            each product in order.items
+              .shadow-sm.p-3.mb-5.bg-white.rounded
+                .row.align-items-center
+                  .col 
+                    h2 #{product.product.title}
+                  .col   
+                    h2 Quantity: #{product.quantity}
+    else
+      h1 No Orders!

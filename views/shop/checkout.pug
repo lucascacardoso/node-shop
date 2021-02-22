@@ -1,0 +1,27 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    if products.length > 0
+      .container.mt-4
+        each product in products
+          .shadow-sm.p-3.mb-5.bg-white.rounded
+            .row.align-items-center
+              .col 
+                h2 #{product.prodId.title}
+              .col   
+                h2 Quantity: #{product.quantity}
+
+        h2 Total: #{totalSum}
+
+        .d-flex.justify-content-center
+          button.btn.btn-success(id="order-btn") ORDER 
+          script(src="https://js.stripe.com/v3/")
+          script.
+            var stripe = Stripe('pk_test_51ILUF1Bg7ojQqnqC2Cyv18AlvmL3n2fO974wFzJViBY9QVezQUlL1eOTxk5IeUsWNztJSp55lqHEhWxSIsdQzocj00b45W07yg');
+            var orderBtn = document.getElementById('order-btn');
+            orderBtn.addEventListener('click', function() {
+              stripe.redirectToCheckout({
+                sessionId: '#{sessionId}'
+              });
+            });
