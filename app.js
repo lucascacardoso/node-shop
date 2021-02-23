@@ -67,7 +67,25 @@ const accessLogStream = fs.createWriteStream(
 
 // início da cadeia de middleware
 // faz o next() por padrão
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", 'https://api.stripe.com'],
+      frameSrc: ["'self'", 'https://js.stripe.com'],
+      childSrc: ["'self'", 'https://hooks.stripe.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://js.stripe.com'],
+      styleSrc: [
+        "'self'",
+        'https://maxcdn.bootstrapcdn.com',
+        'https://checkout.stripe.com',
+      ],
+      fontSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com'],
+      imgSrc: ["'self'", 'https://*.stripe.com'],
+      baseUri: ["'self'"],
+    },
+  })
+);
 app.use(compression());
 app.use(morgan('combined', { stream: accessLogStream }));
 
